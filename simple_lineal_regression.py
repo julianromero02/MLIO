@@ -23,10 +23,10 @@ sxx,sxy = snn(df,'x','y')
 a = sxy/sxx
 b = mean(df['y']) - a*mean(df['x'])
 
-def predict(valor,a,b):
+def predict_SL(valor,a,b):
     return a*valor+b
 valor=int(input("Ingrese el area de su casa"))
-precio=predict(valor,a,b)
+precio=predict_SL(valor,a,b)
 
 print("El precio de su casa es: ",precio)
 print("A")
