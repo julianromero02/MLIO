@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from gradient_descent import *
+from coordinate_descent import *
 
 
 def mean(x):
@@ -34,10 +35,16 @@ b = np.mean(df['y'].values) - a*np.mean(df['x'].values)
 
 valor=int(input("Ingrese el area de su casa"))
 linear_mse=predict_SL(valor,a,b)
-weights = batch_gradient_descent(df['x'].values,df['y'].values,learning_rate=0.00001,n_iter=1700000,regression_type='linear_regression')
-linear_gd= weights[0]+weights[1]*valor
+
+weights_gd = batch_gradient_descent(df['x'].values,df['y'].values,learning_rate=0.00001,n_iter=800000,regression_type='linear_regression')
+linear_gd = weights_gd[0]+weights_gd[1]*valor
+
+weights_coord = coordinate_descent(df['x'].values,df['y'].values,learning_rate=0.00001,n_iter=800000,regression_type='linear_regression')
+linear_cd= weights_coord[0]+weights_coord[1]*valor
 
 
-print("El precio de su casa es: ",linear_mse)
-print("El precio de su casa con Gradient Descent es: ",linear_gd)
-print(weights)
+
+print("El precio de su con gd es: ",linear_gd)
+print("El precio de su casa con coordinate descent es: ",linear_cd)
+print(weights_coord)
+print(weights_gd)
