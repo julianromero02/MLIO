@@ -1,7 +1,6 @@
 
 import numpy as np
-from gradient_descent import extracting_initialinfo
-
+from tools import extracting_initialinfo
 
 def lasso_subgradient(func):
     #Useful when a function as the one used in lasso is not differentiable
@@ -9,11 +8,10 @@ def lasso_subgradient(func):
     return func
 
 
-
-def ridge_regression(x,y,learning_rate=0.01,n_iter=1000,sigma=0.1, gradient_type="gradient_descent"):
+def ridge_regression(x,y,learning_rate=0.01,n_iter=1000,sigma=0.1, gradient_type="gradient_descent",normalize=None):
     #Ridge regression summing l2 weight norm to cost function of linear regression
-    x, n_samples, n_features, weights = extracting_initialinfo(x)
-
+    x, n_samples, n_features, weights = extracting_initialinfo(x,normalize)
+    #sigma = parametro de regularizacion well known as alpha
     for _ in range(n_iter):
         
         if gradient_type=="gradient_descent":
@@ -33,10 +31,9 @@ def ridge_regression(x,y,learning_rate=0.01,n_iter=1000,sigma=0.1, gradient_type
         
     return weights
 
+def lasso_regression(x,y,learning_rate=0.01,n_iter=1000,omega=0.1, gradient_type="gradient_descent",normalize=None):
 
-def lasso_regression(x,y,learning_rate=0.01,n_iter=1000,omega=0.1, gradient_type="gradient_descent"):
-
-    x, n_samples, n_features, weights = extracting_initialinfo(x)
+    x, n_samples, n_features, weights = extracting_initialinfo(x,normalize)
 
     for _ in range(n_iter):
             
@@ -57,9 +54,9 @@ def lasso_regression(x,y,learning_rate=0.01,n_iter=1000,omega=0.1, gradient_type
         
     return weights
 
-def elastic_net(x,y,learning_rate=0.01,n_iter=1000,sigma=0.1,omega=0.1, gradient_type="gradient_descent"):
+def elastic_net(x,y,learning_rate=0.01,n_iter=1000,sigma=0.1,omega=0.1, gradient_type="gradient_descent",normalize=None):
     #Combination of ridge and lasso
-    x, n_samples, n_features, weights = extracting_initialinfo(x)
+    x, n_samples, n_features, weights = extracting_initialinfo(x,normalize)
 
     for _ in range(n_iter):
             
@@ -79,3 +76,4 @@ def elastic_net(x,y,learning_rate=0.01,n_iter=1000,sigma=0.1,omega=0.1, gradient
                 weights[j] -= learning_rate * gradient
         
     return weights
+

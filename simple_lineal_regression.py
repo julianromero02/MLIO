@@ -25,7 +25,7 @@ from numpy.random import MT19937
 from numpy.random import RandomState, SeedSequence
 rs = RandomState(MT19937(SeedSequence(123456789)))
 
-x=np.random.randint(60,500,(10000,2))
+x=np.random.randint(60,500,(100,2))
 y= 4*x[:,0]+10*x[:,1]+1200
 
 #df=pd.DataFrame({'x':x[0],'y':y})
@@ -36,23 +36,23 @@ y= 4*x[:,0]+10*x[:,1]+1200
 valor1=int(input("Ingrese el area de su casa"))
 valor2 = int(input("Ingrese el segundo area de su casa"))
 #linear_mse=predict_SL(valor,a,b)
-lr = 1e-09
-epoch = 1000000
+lr = 1e-03
+epoch = 100000
 weights_gd = batch_gradient_descent(x,y,learning_rate=lr,n_iter=epoch,regression_type='linear_regression')
 linear_gd = weights_gd[0]+weights_gd[1]*valor1+weights_gd[1]*valor2
 
 weights_coord = coordinate_descent(x,y,learning_rate=0.00001,n_iter=epoch,regression_type='linear_regression')
 linear_cd= weights_coord[0]+weights_coord[1]*valor1+weights_coord[2]*valor2
 
-weights_ridge_gd = ridge_regression(x,y,learning_rate=lr,n_iter=epoch, gradient_type='gradient_descent')
+weights_ridge_gd = ridge_regression(x,y,learning_rate=lr,n_iter=epoch, gradient_type='gradient_descent', normalize="l2")
 
-weights_ridge_cd = ridge_regression(x,y,learning_rate=0.00001,n_iter=epoch, gradient_type='coordinate_descent')
+weights_ridge_cd = ridge_regression(x,y,learning_rate=0.00001,n_iter=epoch, gradient_type='coordinate_descent',normalize="l2")
 
-weights_lasso_gd = lasso_regression(x,y,learning_rate=lr,n_iter=epoch, gradient_type='gradient_descent')
-weights_lasso_cd = lasso_regression(x,y,learning_rate=0.00001,n_iter=epoch, gradient_type='coordinate_descent')
+weights_lasso_gd = lasso_regression(x,y,learning_rate=lr,n_iter=epoch, gradient_type='gradient_descent',normalize="l2")
+weights_lasso_cd = lasso_regression(x,y,learning_rate=0.00001,n_iter=epoch, gradient_type='coordinate_descent',normalize="l2")
 
-weights_elastic_gd = elastic_net(x,y,learning_rate=lr,n_iter=epoch, gradient_type='gradient_descent')
-weights_elastic_cd = elastic_net(x,y,learning_rate=0.00001,n_iter=epoch, gradient_type='coordinate_descent')
+weights_elastic_gd = elastic_net(x,y,learning_rate=lr,n_iter=epoch, gradient_type='gradient_descent',normalize="l2")
+weights_elastic_cd = elastic_net(x,y,learning_rate=0.00001,n_iter=epoch, gradient_type='coordinate_descent',normalize="l2")
 
 print("El precio real es: ",linear_gd)
 
